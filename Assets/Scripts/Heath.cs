@@ -23,4 +23,3 @@ public class Health : MonoBehaviour
         healthBar.SetHealth( curHealth );
     }
 }
-Code language: C# (cs)
