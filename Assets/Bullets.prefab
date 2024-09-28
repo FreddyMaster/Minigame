@@ -12,12 +12,12 @@ GameObject:
   - component: {fileID: 7836204078790468603}
   - component: {fileID: 247012534414420903}
   - component: {fileID: 8262621906095064397}
-  - component: {fileID: 1718162231063976454}
   - component: {fileID: 3302598110449693353}
   - component: {fileID: -4360309507397056084}
+  - component: {fileID: 7975799901399004881}
   m_Layer: 0
   m_Name: Bullets
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,24 +102,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1718162231063976454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4565102259264337214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36ffd7a8f7325674aac5562d8f8cc2ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &3302598110449693353
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,7 +130,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -159,3 +147,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b427580d6efdfd2469bca946976ff791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topBound: 75
+  lowerBound: -75
+--- !u!114 &7975799901399004881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565102259264337214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da41aa80bb7aeaa4496a5ca2e27196e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  isPlayerProjectile: 0

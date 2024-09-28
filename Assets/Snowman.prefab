@@ -715,18 +715,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: -1548517742756233269}
-  player: {fileID: 6531781911176922944, guid: f22e6ac815a358646814a2ccf833defa, type: 3}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  health: 120
-  timeBetweenAttacks: 0.47
-  projectile: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
+  projectilePrefab: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
+  projectileSpawnPoint: {fileID: 6919811587370781775}
+  playerTransform: {fileID: 6531781911176922944, guid: f22e6ac815a358646814a2ccf833defa, type: 3}
+  maxHealth: 100
   attackRange: 12
-  playerInAttackRange: 0
+  timeBetweenAttacks: 1
+  projectileSpeed: 32
+  drawGizmos: 1
 --- !u!195 &-1548517742756233269
 NavMeshAgent:
   m_ObjectHideFlags: 0
