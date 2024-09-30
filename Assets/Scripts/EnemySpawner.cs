@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public Camera mainCamera; // Reference to the main camera
     public float spawnOffset = 1f; // Distance from the screen edge to spawn enemies
     public float spawnInterval = 5f; // Time between enemy spawns in seconds
+    public float groundLevel = 0f; // The y-coordinate of the ground level
 
     private void Start()
     {
@@ -43,16 +44,16 @@ public class EnemySpawner : MonoBehaviour
         switch (edge)
         {
             case 0: // Left edge
-                spawnPosition = new Vector3(screenBottomLeft.x - spawnOffset, 0, Random.Range(screenBottomLeft.z, screenTopRight.z));
+                spawnPosition = new Vector3(screenBottomLeft.x - spawnOffset, groundLevel, Random.Range(screenBottomLeft.z, screenTopRight.z));
                 break;
             case 1: // Right edge
-                spawnPosition = new Vector3(screenTopRight.x + spawnOffset, 0, Random.Range(screenBottomLeft.z, screenTopRight.z));
+                spawnPosition = new Vector3(screenTopRight.x + spawnOffset, groundLevel, Random.Range(screenBottomLeft.z, screenTopRight.z));
                 break;
             case 2: // Bottom edge
-                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), 0, screenBottomLeft.z - spawnOffset);
+                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), groundLevel, screenBottomLeft.z - spawnOffset);
                 break;
             case 3: // Top edge
-                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), 0, screenTopRight.z + spawnOffset);
+                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), groundLevel, screenTopRight.z + spawnOffset);
                 break;
         }
 

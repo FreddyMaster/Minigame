@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerController : MonoBehaviour
 {
     public float horizontalInput;
     public float verticalInput;
@@ -12,6 +12,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Reset inputs
+        horizontalInput = 0;
+        verticalInput = 0;
+
+        // Check for WASD keys for movement
+        if (Input.GetKey(KeyCode.W))
+        {
+            verticalInput = 1;
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            verticalInput = -1;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            horizontalInput = -1;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            horizontalInput = 1;
+        }
+
+        // Move the player
+        MovePlayer(new Vector3(horizontalInput, 0, verticalInput));
+
+        // Shooting projectiles with arrow keys
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             ShootProjectile(Vector3.right);
@@ -28,20 +55,25 @@ public class PlayerController : MonoBehaviour
         {
             ShootProjectile(Vector3.back);
         }
+    }
 
-        // Move player on horizontal and vertical inputs
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+    void MovePlayer(Vector3 direction)
+    {
+        // Normalize the direction vector to ensure consistent movement speed
+        if (direction.magnitude > 1)
+        {
+            direction.Normalize();
+        }
 
-        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
-        transform.Translate(Vector3.forward * verticalInput * Time.deltaTime * speed);
+        // Apply movement
+        transform.Translate(direction * Time.deltaTime * speed, Space.World);
     }
 
     void ShootProjectile(Vector3 direction)
     {
-        Vector3 spawnPosition = transform.position + direction * 2f + Vector3.up * 0.5f;
+        Vector3 spawnPosition = transform.position + direction * 3f + Vector3.up * 0.5f;
         GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-        
+
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {

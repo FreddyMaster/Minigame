@@ -1,113 +1,118 @@
+
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAiTutorial : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private Transform projectileSpawnPoint;
-    [SerializeField] private Transform playerTransform; // New: Reference to the player's transform
+    public NavMeshAgent agent;
 
-    [Header("Stats")]
-    [SerializeField] private float maxHealth = 100f;
-    [SerializeField] private float attackRange = 10f;
-    [SerializeField] private float timeBetweenAttacks = 1f;
-    [SerializeField] private float projectileSpeed = 32f;
+    public Transform player;
 
-    private float currentHealth;
-    private bool canAttack = true;
+    public LayerMask whatIsGround, whatIsPlayer;
 
-    [Header("Debug")]
-    [SerializeField] private bool drawGizmos = true;
+    public float health;
+
+    //Patroling
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+
+    //Attacking
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public GameObject projectile;
+
+    //States
+    public float sightRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
 
     private void Awake()
     {
-        if (agent == null) agent = GetComponent<NavMeshAgent>();
-        currentHealth = maxHealth;
+        player = GameObject.Find("PlayerObj").transform;
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        if (playerTransform == null)
-        {
-            Debug.LogWarning("Player transform is not set. Please assign it in the inspector.");
-            return;
-        }
+        //Check for sight and attack range
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
+        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        if (playerInAttackRange && playerInSightRange) AttackPlayer();
+    }
 
-        if (distanceToPlayer <= attackRange)
-        {
-            AttackPlayer();
-        }
-        else
-        {
-            ChasePlayer();
-        }
+    private void Patroling()
+    {
+        if (!walkPointSet) SearchWalkPoint();
+
+        if (walkPointSet)
+            agent.SetDestination(walkPoint);
+
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        //Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+    }
+    private void SearchWalkPoint()
+    {
+        //Calculate random point in range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+            walkPointSet = true;
     }
 
     private void ChasePlayer()
     {
-        agent.SetDestination(playerTransform.position);
+        agent.SetDestination(player.position);
     }
 
     private void AttackPlayer()
     {
+        //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
-        transform.LookAt(playerTransform);
 
-        if (canAttack)
+        transform.LookAt(player);
+
+        if (!alreadyAttacked)
         {
-            FireProjectile();
-            canAttack = false;
+            ///Attack code here
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            ///End of attack code
+
+            alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
     }
-
-    private void FireProjectile()
-    {
-        if (projectilePrefab == null || projectileSpawnPoint == null) return;
-
-        Vector3 direction = (playerTransform.position - projectileSpawnPoint.position).normalized;
-        GameObject projectileObj = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.LookRotation(direction));
-        Rigidbody rb = projectileObj.GetComponent<Rigidbody>();
-        
-        if (rb != null)
-        {
-            rb.AddForce(direction * projectileSpeed, ForceMode.Impulse);
-        }
-        else
-        {
-            Debug.LogWarning("Projectile prefab is missing a Rigidbody component.");
-        }
-    }
-
     private void ResetAttack()
     {
-        canAttack = true;
+        alreadyAttacked = false;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-    }
+        health -= damage;
 
-    private void Die()
+        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+    }
+    private void DestroyEnemy()
     {
-        // Add any death effects or animations here
         Destroy(gameObject);
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (!drawGizmos) return;
-
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 }
