@@ -11,13 +11,12 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        // Start the coroutine to spawn enemies
-        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnEnemies());
     }
 
-    private IEnumerator SpawnEnemyRoutine()
+    private IEnumerator SpawnEnemies()
     {
-        while (true) // This will run indefinitely
+        while (true)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(spawnInterval);
@@ -26,37 +25,30 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Vector3 spawnPosition = GetRandomOffScreenPosition();
+        Vector3 spawnPosition = GetRandomSpawnPosition();
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
 
-    private Vector3 GetRandomOffScreenPosition()
+    private Vector3 GetRandomSpawnPosition()
     {
-        // Get the screen boundaries in world coordinates
-        Vector3 screenBottomLeft = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane));
-        Vector3 screenTopRight = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.nearClipPlane));
+        float screenWidth = mainCamera.orthographicSize * mainCamera.aspect;
+        float screenHeight = mainCamera.orthographicSize;
 
         // Randomly choose one of the four edges of the screen
         int edge = Random.Range(0, 4);
 
-        Vector3 spawnPosition = Vector3.zero;
-
         switch (edge)
         {
             case 0: // Left edge
-                spawnPosition = new Vector3(screenBottomLeft.x - spawnOffset, groundLevel, Random.Range(screenBottomLeft.z, screenTopRight.z));
-                break;
+                return new Vector3(-screenWidth - spawnOffset, groundLevel, 0);
             case 1: // Right edge
-                spawnPosition = new Vector3(screenTopRight.x + spawnOffset, groundLevel, Random.Range(screenBottomLeft.z, screenTopRight.z));
-                break;
-            case 2: // Bottom edge
-                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), groundLevel, screenBottomLeft.z - spawnOffset);
-                break;
-            case 3: // Top edge
-                spawnPosition = new Vector3(Random.Range(screenBottomLeft.x, screenTopRight.x), groundLevel, screenTopRight.z + spawnOffset);
-                break;
+                return new Vector3(screenWidth + spawnOffset, groundLevel, 0);
+            case 2: // Top edge
+                return new Vector3(Random.Range(-screenWidth, screenWidth), groundLevel + screenHeight + spawnOffset, 0);
+            case 3: // Bottom edge
+                return new Vector3(Random.Range(-screenWidth, screenWidth), groundLevel - screenHeight - spawnOffset, 0);
+            default:
+                return Vector3.zero;
         }
-
-        return spawnPosition;
     }
 }

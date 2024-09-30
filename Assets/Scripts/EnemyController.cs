@@ -5,12 +5,15 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float lookRadius = 10f;
     public GameObject projectilePrefab; // Reference to the projectile prefab
-    public float fireRate = 1f; // Rate of fire
+    public float fireRate = 1f; // Rate of fire (shots per second)
     public Transform firePoint;
     private float attackRange = 10f;
     public int shootforce = 3000;
+    public float projectileDamage = 10f;
+
+
+    private float lastShotTime = 0f; // Time of the last shot
 
     Transform target;
     NavMeshAgent agent;
@@ -27,18 +30,20 @@ public class EnemyController : MonoBehaviour
     {
         float distance = Vector3.Distance(target.position, transform.position);
 
-        if (distance <= lookRadius)
-        {
             agent.SetDestination(target.position);
 
             if (distance <= attackRange)
             {
                 // Attack the target
                 FaceTarget();
-             
-                Shoot();
+
+                // Check if enough time has passed since the last shot
+                if (Time.time >= lastShotTime + 1f / fireRate)
+                {
+                    Shoot();
+                    lastShotTime = Time.time; // Update the time of the last shot
+                }
             }
-        }
     }
 
     void FaceTarget()
@@ -47,7 +52,6 @@ public class EnemyController : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
-
 
     void Shoot()
     {
@@ -68,16 +72,17 @@ public class EnemyController : MonoBehaviour
         }
 
         // Instantiate and shoot the projectile
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position * 3f, Quaternion.identity);
+        Vector3 spawnPosition = transform.position + shootDirection * 3f + Vector3.up * 0.5f;
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.velocity = shootDirection * 10f; // Adjust the speed as needed
+        if (rb != null)
+        {
+            rb.AddForce(shootDirection * shootforce);
+        }
+
+        Projectile projectileScript = projectile.AddComponent<Projectile>();
+        projectileScript.damage = projectileDamage;
         Debug.Log("Projectile velocity: " + rb.velocity);
-
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 }
