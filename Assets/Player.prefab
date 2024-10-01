@@ -544,8 +544,8 @@ GameObject:
   - component: {fileID: 6531781911176922944}
   - component: {fileID: 6606528593079320256}
   - component: {fileID: 5967052395304765527}
-  - component: {fileID: 5864191237291650574}
   - component: {fileID: 1369624106443362251}
+  - component: {fileID: -5306928232081224586}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -586,6 +586,7 @@ MonoBehaviour:
   speed: 10
   xRange: 35
   shootforce: 3000
+  fireRate: 1
   projectilePrefab: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
   projectileDamage: 10
 --- !u!54 &5967052395304765527
@@ -615,22 +616,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5864191237291650574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7972612038461451118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae51cf72a9152a44b0799a2862715ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!65 &1369624106443362251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -652,6 +637,22 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.8755555, y: 3.2279754, z: 1}
   m_Center: {x: -1.0689123, y: 1.1139877, z: 0}
+--- !u!114 &-5306928232081224586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7972612038461451118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae51cf72a9152a44b0799a2862715ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8656476442922256556
 GameObject:
   m_ObjectHideFlags: 0
