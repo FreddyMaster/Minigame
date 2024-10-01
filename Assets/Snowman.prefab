@@ -736,11 +736,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820eafb318b41cd4386195671b5896e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookRadius: 10
   projectilePrefab: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
   fireRate: 1
   firePoint: {fileID: 6919811587370781775}
-  shootforce: 3000
+  shootforce: 1000
   projectileDamage: 1
 --- !u!114 &5615195608421937980
 MonoBehaviour:
@@ -754,7 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae51cf72a9152a44b0799a2862715ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 50
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []

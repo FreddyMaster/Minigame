@@ -585,7 +585,8 @@ MonoBehaviour:
   verticalInput: 0
   speed: 10
   xRange: 35
-  shootforce: 3000
+  shootforce: 1000
+  fireRate: 5
   projectilePrefab: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
   projectileDamage: 10
 --- !u!54 &5967052395304765527
