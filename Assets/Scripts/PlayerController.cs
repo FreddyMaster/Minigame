@@ -9,8 +9,15 @@ public class PlayerController : MonoBehaviour
     public int shootforce = 3000;
     public float fireRate = 5f;
     public GameObject projectilePrefab;
+    public Transform projectileSpawnpoint;
     public float projectileDamage = 10f;
     private float lastShotTime = 0f; // Time of the last shot
+    private Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     void Update()
     {
@@ -40,25 +47,26 @@ public class PlayerController : MonoBehaviour
         // Move the player
         MovePlayer(new Vector3(horizontalInput, 0, verticalInput));
 
-
-            if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))
             {
-                ShootProjectile(Vector3.right);
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
+            ShootProjectile(Vector3.right);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
             {
                 ShootProjectile(Vector3.left);
-            }
+        }
             if (Input.GetKey(KeyCode.UpArrow))
             {
                 ShootProjectile(Vector3.forward);
-            }
+        }
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 ShootProjectile(Vector3.back);
-            }
+        }
+
 
     }
+
 
     void MovePlayer(Vector3 direction)
     {
@@ -78,9 +86,10 @@ public class PlayerController : MonoBehaviour
         // Check if enough time has passed since the last shot
         if (Time.time >= lastShotTime + 1f / fireRate)
         {
-            Vector3 spawnPosition = transform.position + direction * 3f + Vector3.up * 0.5f;
-            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-
+            animator.SetBool("isAttacking", true);
+            Debug.Log(animator);
+            Vector3 spawnPosition = projectileSpawnpoint.position + direction * 3f + Vector3.up * 0.5f;
+            GameObject projectile = Instantiate(projectilePrefab, spawnPosition , Quaternion.identity);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -90,10 +99,21 @@ public class PlayerController : MonoBehaviour
             Projectile projectileScript = projectile.AddComponent<Projectile>();
             projectileScript.damage = projectileDamage;
             lastShotTime = Time.time; // Update the time of the last shot
+            if (!AnimatorIsPlaying())
+            {
+                animator.SetBool("isAttacking", false);
+
+            }
         }
         else
         {
             return;
         }
+    }
+    bool AnimatorIsPlaying()
+    {
+      
+        return animator.GetCurrentAnimatorStateInfo(0).length >
+               animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
 }

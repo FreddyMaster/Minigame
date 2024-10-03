@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TextMesh Pro.meta
+guid: f54d1bd14bd3ca042bd867b519fee8cc
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+========
+guid: ab8fb946df24733499839d7e4719e80e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+>>>>>>>> 23f0fddff89096e4d01d4215b33c1ebbfa7ebad6:Assets/UniversalRenderPipelineGlobalSettings.asset.meta
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -9,21 +9,19 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             // Damage the player
-            Health playerHealth = collision.gameObject.GetComponent<Health>();
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
                 playerHealth.TakeDamage(damage);
-                Debug.Log("Player hit! Damage applied: " + damage);
             }
         }
         else
         {
             // Damage the enemy
-            Health enemyHealth = collision.gameObject.GetComponent<Health>();
+            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(damage);
-                Debug.Log("Enemy hit! Damage applied: " + damage);
             }
         }
 

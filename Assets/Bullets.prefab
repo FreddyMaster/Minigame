@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 41cf55a6e10df3444a0defd1f0b4bd55, type: 2}
+  - {fileID: 2100000, guid: 5c1d00907bb40b54abd396edd1d307ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -162,4 +162,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  isPlayerProjectile: 0
