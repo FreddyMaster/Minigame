@@ -76,6 +76,8 @@ GameObject:
   - component: {fileID: 95380085654935804}
   - component: {fileID: 7253870306702156863}
   - component: {fileID: -1161254878268870287}
+  - component: {fileID: 1274415617025760654}
+  - component: {fileID: 6960601582617824027}
   m_Layer: 0
   m_Name: PBR_Golem
   m_TagString: Untagged
@@ -134,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820eafb318b41cd4386195671b5896e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1375754531036840, guid: 71497ec4178769a4c8cdb38563f01fc0, type: 3}
+  projectilePrefab: {fileID: 4565102259264337214, guid: f6c389b47f62c3246b49be5b609f16a6, type: 3}
   fireRate: 1
   firePoint: {fileID: 3784363786220590563}
   shootforce: 1000
@@ -161,6 +163,44 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1274415617025760654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067925524328404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b1dd2bef8475846b1452ecf9ed8d5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  scoreValue: 1
+--- !u!65 &6960601582617824027
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067925524328404}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.5995674, y: 4.6061873, z: 2.7780457}
+  m_Center: {x: -0.069610596, y: 1.8030937, z: 0.33760834}
 --- !u!1 &1088256926929212
 GameObject:
   m_ObjectHideFlags: 0
