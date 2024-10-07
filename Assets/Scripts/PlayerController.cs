@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         if (Time.time >= lastShotTime + 1f / fireRate)
         {
             animator.SetBool("isAttacking", true);
-            Vector3 spawnPosition = projectileSpawnpoint.position + direction * 3f + Vector3.up * 0.5f;
+            Vector3 spawnPosition = projectileSpawnpoint.position + direction * 1f + Vector3.up * 0.5f;
             GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
             if (rb != null)

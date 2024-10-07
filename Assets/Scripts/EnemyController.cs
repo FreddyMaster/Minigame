@@ -55,7 +55,6 @@ public class EnemyController : MonoBehaviour
 
     void Shoot()
     {
-        Debug.Log("Shooting at target");
 
         // Calculate the direction to the target
         Vector3 directionToTarget = (target.position - firePoint.position).normalized;
@@ -83,6 +82,5 @@ public class EnemyController : MonoBehaviour
 
         Projectile projectileScript = projectile.AddComponent<Projectile>();
         projectileScript.damage = projectileDamage;
-        Debug.Log("Projectile velocity: " + rb.velocity);
     }
 }
